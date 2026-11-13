@@ -123,10 +123,10 @@ export function GameModal({ game, onClose, onBestChange }: GameModalProps) {
       if (document.hidden) pause();
     };
     document.addEventListener("visibilitychange", onVis);
-    window.addEventListener("blur", onVis);
+    window.addEventListener("blur", pause);
     return () => {
       document.removeEventListener("visibilitychange", onVis);
-      window.removeEventListener("blur", onVis);
+      window.removeEventListener("blur", pause);
     };
   }, [pause]);
 
