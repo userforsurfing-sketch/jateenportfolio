@@ -152,12 +152,12 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
-    background-color: var(--background-deep);
+    background-color: var(--background);
     color-scheme: dark;
   }
 
+  /* No body background: the fixed Backdrop (negative z-index) must show through. */
   body {
-    background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
