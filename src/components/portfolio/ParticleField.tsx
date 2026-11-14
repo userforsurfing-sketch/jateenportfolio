@@ -35,7 +35,7 @@ export function ParticleField() {
         r: Math.random() * 1.6 + 0.4,
         vx: (Math.random() - 0.5) * 0.15,
         vy: -(Math.random() * 0.25 + 0.05),
-        c: colors[Math.floor(Math.random() * colors.length)],
+        c: colors[Math.floor(Math.random() * colors.length)] ?? pal.fg,
         tw: Math.random() * Math.PI * 2,
       }));
     };

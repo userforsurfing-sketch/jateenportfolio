@@ -158,7 +158,7 @@ export const LEVELS: LevelDef[] = [
 
 export function findTile(map: string[], ch: string) {
   for (let r = 0; r < map.length; r++) {
-    const c = map[r].indexOf(ch);
+    const c = map[r]!.indexOf(ch);
     if (c !== -1) return { c, r };
   }
   return null;

@@ -19,7 +19,7 @@ export function shuffledDeck(pairs: number, symbolCount: number, random = Math.r
   const deck = [...symbols, ...symbols].map((symbol, i) => ({ id: i, symbol }));
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
-    [deck[i], deck[j]] = [deck[j], deck[i]];
+    [deck[i], deck[j]] = [deck[j]!, deck[i]!];
   }
   return deck;
 }

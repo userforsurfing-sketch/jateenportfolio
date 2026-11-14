@@ -84,7 +84,7 @@ export function CyberRacer({ paused, runId, sfx, onScore, onGameOver }: GameProp
         x,
         y: -CAR_H - 20,
         speed: rand(150, 250) + Math.min(120, time * 2),
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color: colors[Math.floor(Math.random() * colors.length)] ?? "pink",
         passed: false,
       });
     };
@@ -124,7 +124,7 @@ export function CyberRacer({ paused, runId, sfx, onScore, onGameOver }: GameProp
 
       const pBox = { x: player.x + 6, y: player.y + 6, w: CAR_W - 12, h: CAR_H - 10 };
       for (let i = cars.length - 1; i >= 0; i--) {
-        const c = cars[i];
+        const c = cars[i]!;
         c.y += (speed - c.speed) * dt;
         if (c.y > H + 120 || c.y < -400) {
           cars.splice(i, 1);

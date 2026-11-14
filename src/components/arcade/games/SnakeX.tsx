@@ -81,7 +81,7 @@ export function SnakeX({ paused, runId, sfx, onScore, onGameOver }: GameProps) {
 
     const turn = (d: Dir) => {
       if (pausedRef.current || over) return;
-      const last = queue.length ? queue[queue.length - 1] : dir;
+      const last = queue[queue.length - 1] ?? dir;
       if (d === last || d === OPPOSITE[last] || queue.length >= 3) return;
       queue.push(d);
     };
@@ -90,7 +90,8 @@ export function SnakeX({ paused, runId, sfx, onScore, onGameOver }: GameProps) {
     const step = () => {
       if (queue.length) dir = queue.shift()!;
       const v = DIRS[dir];
-      const head = { x: snake[0].x + v.x, y: snake[0].y + v.y };
+      const first = snake[0]!;
+      const head = { x: first.x + v.x, y: first.y + v.y };
       const eatsFood = head.x === food.x && head.y === food.y;
       const eatsBonus = !!bonus && head.x === bonus.x && head.y === bonus.y;
       const grows = eatsFood || eatsBonus;
@@ -99,14 +100,14 @@ export function SnakeX({ paused, runId, sfx, onScore, onGameOver }: GameProps) {
       const hitSelf = body.some((s) => s.x === head.x && s.y === head.y);
       if (hitWall || hitSelf) {
         over = true;
-        burst(particles, snake[0].x * CELL + CELL / 2, snake[0].y * CELL + CELL / 2, pal.green, 40, 300);
+        burst(particles, first.x * CELL + CELL / 2, first.y * CELL + CELL / 2, pal.green, 40, 300);
         sfxRef.current.play("hit");
         onOverRef.current({ score, detail: `Length ${snake.length}` });
         return;
       }
       prev = snake.map((s) => ({ ...s }));
       snake = [head, ...body];
-      if (grows) prev.push({ ...prev[prev.length - 1] });
+      if (grows) prev.push({ ...prev[prev.length - 1]! });
 
       if (eatsFood) {
         score += 10;
@@ -192,7 +193,7 @@ export function SnakeX({ paused, runId, sfx, onScore, onGameOver }: GameProps) {
       ctx.lineWidth = CELL * 0.22;
       ctx.stroke();
 
-      const head = pts[0];
+      const head = pts[0]!;
       ctx.fillStyle = pal.cyan;
       ctx.shadowColor = pal.cyan;
       ctx.shadowBlur = 16;

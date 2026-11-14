@@ -82,7 +82,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
     let flash = 0;
 
     const key = (c: number, r: number) => `${c},${r}`;
-    const tileAt = (c: number, r: number) => (r < 0 || r >= ROWS || c < 0 || c >= COLS ? "#" : map[r][c]);
+    const tileAt = (c: number, r: number) => (r < 0 || r >= ROWS || c < 0 || c >= COLS ? "#" : (map[r]?.[c] ?? "."));
 
     const pushScore = () => {
       const next = Math.max(0, cleared * 1000 - deaths * 25);
@@ -107,7 +107,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
 
     const loadLevel = (i: number) => {
       levelIndex = i;
-      const def = LEVELS[i];
+      const def = LEVELS[i]!;
       map = def.map;
       movers = def.movers.map((m) => {
         const x0 = m.tx * TILE;
@@ -244,7 +244,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
           const next = t + dt;
           crumble.set(k, next);
           if (next >= CRUMBLE_DELAY) {
-            const [c, r] = k.split(",").map(Number);
+            const [c = 0, r = 0] = k.split(",").map(Number);
             burst(particles, c * TILE + TILE / 2, r * TILE + 6, pal.solidEdge, 10, 120);
           }
         }
@@ -257,7 +257,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
       for (let r = Math.floor(p.y / TILE) - 3; r <= Math.floor(feet / TILE) + 3; r++) {
         for (let c = Math.floor(p.x / TILE) - 3; c <= Math.floor((p.x + PW) / TILE) + 3; c++) {
           if (r < 0 || r >= ROWS || c < 0 || c >= COLS) continue;
-          const t = map[r][c];
+          const t = tileAt(c, r);
           const tx = c * TILE;
           const ty = r * TILE;
           if (t === "h" && !popped.has(key(c, r))) {
@@ -357,7 +357,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
 
       for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
-          const t = map[r][c];
+          const t = tileAt(c, r);
           const x = c * TILE;
           const y = r * TILE;
           if (t === "#" || t === "f" || t === "d") {
@@ -366,7 +366,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
             const shake = t === "d" && ct != null ? (Math.random() - 0.5) * 3 : 0;
             ctx.fillStyle = pal.solid;
             ctx.fillRect(x + shake, y, TILE, TILE);
-            const above = r > 0 ? map[r - 1][c] : "#";
+            const above = tileAt(c, r - 1);
             if (above !== "#" && above !== "f" && above !== "d") {
               ctx.fillStyle = pal.solidEdge;
               ctx.fillRect(x + shake, y, TILE, 3);
@@ -393,7 +393,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
       ctx.lineWidth = 2;
       for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
-          const t = map[r][c];
+          const t = tileAt(c, r);
           if (t === "^") drawSpike(c * TILE, r * TILE, false);
           else if (t === "v") drawSpike(c * TILE, r * TILE, true);
           else if (t === "h") {
@@ -406,7 +406,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
 
       for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
-          const t = map[r][c];
+          const t = tileAt(c, r);
           const x = c * TILE;
           const y = r * TILE;
           if (t === "C") {
@@ -484,7 +484,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
       ctx.fill();
       ctx.font = "700 12px 'JetBrains Mono', monospace";
       ctx.fillStyle = pal.fg;
-      ctx.fillText(`LEVEL ${levelIndex + 1}/${LEVELS.length} · ${LEVELS[levelIndex].name.toUpperCase()}`, 46, 52);
+      ctx.fillText(`LEVEL ${levelIndex + 1}/${LEVELS.length} · ${LEVELS[levelIndex]!.name.toUpperCase()}`, 46, 52);
       ctx.fillStyle = pal.red;
       ctx.fillText(`DEATHS ${deaths}`, 46, 67);
 
@@ -492,7 +492,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
         ctx.fillStyle = alpha(pal.fg, 0.7);
         ctx.font = "600 14px 'JetBrains Mono', monospace";
         ctx.textAlign = "center";
-        ctx.fillText(LEVELS[levelIndex].hint, W / 2, 140);
+        ctx.fillText(LEVELS[levelIndex]!.hint, W / 2, 140);
         ctx.textAlign = "left";
       }
 
@@ -505,7 +505,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
         ctx.fillText(`LEVEL ${levelIndex + 1} CLEARED`, W / 2, H / 2 - 20);
         ctx.font = "600 14px 'JetBrains Mono', monospace";
         ctx.fillStyle = pal.muted;
-        ctx.fillText(`Next: ${LEVELS[levelIndex + 1].name} — "${LEVELS[levelIndex + 1].hint}"`, W / 2, H / 2 + 16);
+        ctx.fillText(`Next: ${LEVELS[levelIndex + 1]!.name} — "${LEVELS[levelIndex + 1]!.hint}"`, W / 2, H / 2 + 16);
         ctx.fillStyle = pal.cyan;
         ctx.fillText("Press jump to continue", W / 2, H / 2 + 46);
         ctx.textAlign = "left";

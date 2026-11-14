@@ -120,14 +120,15 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
 
       trail.push({ x: player.x + player.w / 2, y: player.y + player.h / 2, life: 0.35 });
       for (let i = trail.length - 1; i >= 0; i--) {
-        trail[i].x -= dx;
-        trail[i].life -= dt;
-        if (trail[i].life <= 0) trail.splice(i, 1);
+        const t = trail[i]!;
+        t.x -= dx;
+        t.life -= dt;
+        if (t.life <= 0) trail.splice(i, 1);
       }
 
       const box = { x: player.x + 5, y: player.y + 5, w: player.w - 10, h: player.h - 6 };
       for (let i = obstacles.length - 1; i >= 0; i--) {
-        const o = obstacles[i];
+        const o = obstacles[i]!;
         o.x -= dx;
         if (o.x + o.w < -40) {
           obstacles.splice(i, 1);

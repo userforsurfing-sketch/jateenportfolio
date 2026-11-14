@@ -9,7 +9,7 @@ function token(name: string, fallback: string) {
 /** Adds an alpha channel to an `oklch(L C H)` token value. */
 export function alpha(color: string, a: number) {
   const match = color.match(/^oklch\(([^)/]+)\)$/);
-  return match ? `oklch(${match[1].trim()} / ${a})` : color;
+  return match?.[1] ? `oklch(${match[1].trim()} / ${a})` : color;
 }
 
 export function readPalette() {

@@ -82,8 +82,9 @@ export function MemoryMatch({ paused, runId, sfx, onScore, onGameOver }: GamePro
 
     const nextMoves = moves + 1;
     setMoves(nextMoves);
-    const [a, b] = nextOpen;
-    if (deck[a].symbol === deck[b].symbol) {
+    const a = nextOpen[0]!;
+    const b = nextOpen[1]!;
+    if (deck[a]?.symbol === deck[b]?.symbol) {
       const nextMatched = new Set(matched);
       nextMatched.add(a);
       nextMatched.add(b);
@@ -156,7 +157,7 @@ export function MemoryMatch({ paused, runId, sfx, onScore, onGameOver }: GamePro
 
       <div className={cn("grid w-full gap-2 sm:gap-3", cols, width)}>
         {deck.map((card, index) => {
-          const Icon = SYMBOLS[card.symbol];
+          const Icon = SYMBOLS[card.symbol] ?? Star;
           const isMatched = matched.has(index);
           const faceUp = isMatched || open.includes(index);
           return (

@@ -94,7 +94,7 @@ export function burst(list: Particle[], x: number, y: number, color: string, cou
 
 export function updateParticles(list: Particle[], dt: number, gravity = 0) {
   for (let i = list.length - 1; i >= 0; i--) {
-    const p = list[i];
+    const p = list[i]!;
     p.life -= dt;
     if (p.life <= 0) {
       list.splice(i, 1);

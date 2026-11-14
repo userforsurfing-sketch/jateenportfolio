@@ -154,7 +154,7 @@ export function Contact() {
   );
 }
 
-function Field({ label, error, id, children }: { label: string; error?: string; id: string; children: ReactNode }) {
+function Field({ label, error, id, children }: { label: string; error?: string | undefined; id: string; children: ReactNode }) {
   return (
     <div>
       <label htmlFor={id} className="mb-2 block font-mono text-[0.7rem] uppercase tracking-widest text-muted-foreground">
