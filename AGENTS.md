@@ -28,3 +28,11 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- Single scrolling page at `/` with section anchors (`#about`, `#games`, …); the brief asks for smooth-scroll navigation with an active-section indicator.
+- All personal content (bio, skills, projects, journey, contact links) lives in `src/content/profile.ts`; unknown values stay `null` and render as labelled placeholders so nothing is invented.
+- Arcade games live in `src/components/arcade/games/`, each implementing `GameProps` (`types.ts`) and registered in `registry.ts`; `GameModal` owns pause/restart/sound/score UI so games only handle gameplay.
+- Canvas games read colors from CSS tokens via `src/lib/arcade/palette.ts`, keeping the design system as the single source of color.
+- Best scores and the sound setting are stored in localStorage via `src/lib/arcade/storage.ts` (higher score is always better).

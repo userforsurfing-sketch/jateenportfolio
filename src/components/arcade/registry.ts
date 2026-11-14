@@ -25,6 +25,8 @@ export interface GameMeta {
   goal: string;
   /** Games that rely on arrow keys / space need the shell to block page scrolling. */
   capturesKeys: boolean;
+  /** Wide games suggest rotating a phone held upright. */
+  wide: boolean;
   Component: ComponentType<GameProps>;
 }
 
@@ -41,6 +43,7 @@ export const GAMES: GameMeta[] = [
     touch: "Tap the screen or the JUMP button.",
     goal: "Survive as long as possible. Speed increases over time.",
     capturesKeys: true,
+    wide: true,
     Component: NeonJump,
   },
   {
@@ -55,6 +58,7 @@ export const GAMES: GameMeta[] = [
     touch: "Use the arrow buttons to move and JUMP to jump.",
     goal: "Reach the glowing portal. Flags are checkpoints. Expect betrayal.",
     capturesKeys: true,
+    wide: true,
     Component: DevilTrap,
   },
   {
@@ -69,6 +73,7 @@ export const GAMES: GameMeta[] = [
     touch: "Drag on the road to steer, or use the on-screen buttons.",
     goal: "Drive as far as you can without crashing. Traffic gets faster.",
     capturesKeys: true,
+    wide: false,
     Component: CyberRacer,
   },
   {
@@ -83,6 +88,7 @@ export const GAMES: GameMeta[] = [
     touch: "Tap cards to flip them.",
     goal: "Match all pairs. Fewer moves and a faster time give a bigger bonus.",
     capturesKeys: false,
+    wide: false,
     Component: MemoryMatch,
   },
   {
@@ -97,6 +103,7 @@ export const GAMES: GameMeta[] = [
     touch: "Swipe on the board or use the arrow pad.",
     goal: "Eat orbs (+10) and golden stars (+50). Don't hit walls or yourself.",
     capturesKeys: true,
+    wide: true,
     Component: SnakeX,
   },
 ];
