@@ -173,12 +173,14 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
       ctx.save();
       ctx.beginPath();
       ctx.arc(sunX, sunY, 90, Math.PI, 0);
+      ctx.closePath();
+      ctx.clip();
       ctx.fillStyle = sun;
-      ctx.globalAlpha = 0.55;
-      ctx.fill();
+      ctx.globalAlpha = 0.6;
+      ctx.fillRect(sunX - 90, sunY - 90, 180, 90);
       ctx.globalAlpha = 1;
-      ctx.fillStyle = pal.bg;
-      for (let i = 0; i < 6; i++) ctx.fillRect(sunX - 95, sunY - 12 - i * 13, 190, 3 + i * 0.4);
+      ctx.globalCompositeOperation = "destination-out";
+      for (let i = 0; i < 6; i++) ctx.fillRect(sunX - 95, sunY - 8 - i * 13, 190, 4 - i * 0.5);
       ctx.restore();
 
       // Floor grid
@@ -227,9 +229,9 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
             ctx.stroke();
           }
         } else {
-          ctx.strokeStyle = pal.accent;
-          ctx.shadowColor = pal.accent;
-          ctx.fillStyle = alpha(pal.accent, 0.25);
+          ctx.strokeStyle = pal.amber;
+          ctx.shadowColor = pal.amber;
+          ctx.fillStyle = alpha(pal.amber, 0.22);
           ctx.beginPath();
           ctx.roundRect(o.x, GROUND - o.h, o.w, o.h, 4);
           ctx.fill();
