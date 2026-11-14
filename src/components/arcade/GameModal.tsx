@@ -208,6 +208,11 @@ export function GameModal({ game, onClose, onBestChange }: GameModalProps) {
         </div>
       </header>
 
+      {game.wide && (
+        <p className="relative z-10 hidden px-4 pt-3 text-center font-mono text-[0.68rem] uppercase tracking-widest text-muted-foreground portrait:max-md:block">
+          Tip: rotate your phone for a bigger screen
+        </p>
+      )}
       <div className="relative z-10 flex min-h-0 flex-1 items-stretch justify-center p-3 sm:p-6">
         <div
           ref={stageRef}

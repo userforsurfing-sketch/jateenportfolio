@@ -1,23 +1,57 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { About } from "@/components/portfolio/About";
+import { Backdrop } from "@/components/portfolio/Backdrop";
+import { Contact } from "@/components/portfolio/Contact";
+import { Footer } from "@/components/portfolio/Footer";
+import { GamingZone } from "@/components/portfolio/GamingZone";
+import { Hero } from "@/components/portfolio/Hero";
+import { Journey } from "@/components/portfolio/Journey";
+import { Navbar } from "@/components/portfolio/Navbar";
+import { Projects } from "@/components/portfolio/Projects";
+import { Skills } from "@/components/portfolio/Skills";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const TITLE = "JATEEN – My Digital Space";
+const DESCRIPTION =
+  "Jateen's personal portfolio: projects, skills, journey and a built-in arcade with five original games — Neon Jump, Devil Trap, Cyber Racer, Memory Match and Snake X.";
+
+// One long scrolling page (sections + smooth scrolling), as the brief asks.
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: TITLE },
+      { name: "twitter:description", content: DESCRIPTION },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+      >
+        Skip to content
+      </a>
+      <Backdrop />
+      <Navbar />
+      <main id="main">
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <GamingZone />
+        <Journey />
+        <Contact />
+      </main>
+      <Footer />
+    </>
   );
 }

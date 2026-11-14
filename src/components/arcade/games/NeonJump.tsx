@@ -120,14 +120,15 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
 
       trail.push({ x: player.x + player.w / 2, y: player.y + player.h / 2, life: 0.35 });
       for (let i = trail.length - 1; i >= 0; i--) {
-        trail[i].x -= dx;
-        trail[i].life -= dt;
-        if (trail[i].life <= 0) trail.splice(i, 1);
+        const t = trail[i]!;
+        t.x -= dx;
+        t.life -= dt;
+        if (t.life <= 0) trail.splice(i, 1);
       }
 
       const box = { x: player.x + 5, y: player.y + 5, w: player.w - 10, h: player.h - 6 };
       for (let i = obstacles.length - 1; i >= 0; i--) {
-        const o = obstacles[i];
+        const o = obstacles[i]!;
         o.x -= dx;
         if (o.x + o.w < -40) {
           obstacles.splice(i, 1);
@@ -172,12 +173,21 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
       ctx.save();
       ctx.beginPath();
       ctx.arc(sunX, sunY, 90, Math.PI, 0);
+      ctx.closePath();
+      ctx.clip();
       ctx.fillStyle = sun;
-      ctx.globalAlpha = 0.55;
-      ctx.fill();
+      ctx.globalAlpha = 0.6;
+      // Draw the sun as slices so the classic synthwave gaps show the sky through.
+      let y = sunY - 90;
+      let slice = 0;
+      while (y < sunY) {
+        const gap = slice < 3 ? 0 : 1.5 + (slice - 3) * 0.9;
+        const h = 13 - gap;
+        ctx.fillRect(sunX - 90, y, 180, h);
+        y += 13;
+        slice++;
+      }
       ctx.globalAlpha = 1;
-      ctx.fillStyle = pal.bg;
-      for (let i = 0; i < 6; i++) ctx.fillRect(sunX - 95, sunY - 12 - i * 13, 190, 3 + i * 0.4);
       ctx.restore();
 
       // Floor grid
@@ -226,9 +236,9 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
             ctx.stroke();
           }
         } else {
-          ctx.strokeStyle = pal.accent;
-          ctx.shadowColor = pal.accent;
-          ctx.fillStyle = alpha(pal.accent, 0.25);
+          ctx.strokeStyle = pal.amber;
+          ctx.shadowColor = pal.amber;
+          ctx.fillStyle = alpha(pal.amber, 0.22);
           ctx.beginPath();
           ctx.roundRect(o.x, GROUND - o.h, o.w, o.h, 4);
           ctx.fill();
