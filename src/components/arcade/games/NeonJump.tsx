@@ -177,10 +177,17 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
       ctx.clip();
       ctx.fillStyle = sun;
       ctx.globalAlpha = 0.6;
-      ctx.fillRect(sunX - 90, sunY - 90, 180, 90);
+      // Draw the sun as slices so the classic synthwave gaps show the sky through.
+      let y = sunY - 90;
+      let slice = 0;
+      while (y < sunY) {
+        const gap = slice < 3 ? 0 : 1.5 + (slice - 3) * 0.9;
+        const h = 13 - gap;
+        ctx.fillRect(sunX - 90, y, 180, h);
+        y += 13;
+        slice++;
+      }
       ctx.globalAlpha = 1;
-      ctx.globalCompositeOperation = "destination-out";
-      for (let i = 0; i < 6; i++) ctx.fillRect(sunX - 95, sunY - 8 - i * 13, 190, 4 - i * 0.5);
       ctx.restore();
 
       // Floor grid
