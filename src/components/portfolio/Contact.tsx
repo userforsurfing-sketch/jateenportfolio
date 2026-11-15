@@ -1,46 +1,56 @@
 import { useState, type FormEvent, type ReactNode } from "react";
-import { Github, Info, Linkedin, Mail, Send } from "lucide-react";
+import { CheckCircle2, Github, Instagram, Linkedin, Loader2, Mail, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/content/profile";
+import { contactSchema } from "@/lib/contact";
+import { submitContact } from "@/lib/contact.functions";
 import { cn } from "@/lib/utils";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
-type Errors = Partial<Record<"name" | "email" | "message", string>>;
+type Field = "name" | "email" | "message";
+type Errors = Partial<Record<Field, string>>;
+type Status = "idle" | "sending" | "sent" | "error";
 
-function validate(data: { name: string; email: string; message: string }): Errors {
-  const errors: Errors = {};
-  if (!data.name.trim()) errors.name = "Please enter your name.";
-  else if (data.name.length > 100) errors.name = "Name must be under 100 characters.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) errors.email = "Please enter a valid email.";
-  if (data.message.trim().length < 10) errors.message = "Message should be at least 10 characters.";
-  else if (data.message.length > 2000) errors.message = "Message must be under 2000 characters.";
-  return errors;
-}
+const handle = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 
 export function Contact() {
-  const { email, github, linkedin } = profile.contact;
-  // Sending works through the visitor's email app once a real address is set in the profile.
-  const canSend = Boolean(email);
-  const [values, setValues] = useState({ name: "", email: "", message: "" });
+  const { email, github, linkedin, instagram } = profile.contact;
+  const [values, setValues] = useState({ name: "", email: "", message: "", website: "" });
   const [errors, setErrors] = useState<Errors>({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [serverError, setServerError] = useState("");
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const found = validate(values);
-    setErrors(found);
-    if (Object.keys(found).length || !email) return;
-    const subject = encodeURIComponent(`Hello from ${values.name.trim()}`);
-    const body = encodeURIComponent(`${values.message.trim()}\n\n— ${values.name.trim()} (${values.email.trim()})`);
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    const parsed = contactSchema.safeParse(values);
+    if (!parsed.success) {
+      const found: Errors = {};
+      for (const issue of parsed.error.issues) {
+        const key = issue.path[0] as Field;
+        if (!found[key]) found[key] = issue.message;
+      }
+      setErrors(found);
+      return;
+    }
+    setErrors({});
+    setStatus("sending");
+    setServerError("");
+    try {
+      await submitContact({ data: { ...parsed.data, website: values.website } });
+      setStatus("sent");
+      setValues({ name: "", email: "", message: "", website: "" });
+    } catch (err) {
+      setStatus("error");
+      setServerError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
   };
 
   const channels = [
     { icon: Mail, label: "Email", value: email, href: email ? `mailto:${email}` : null },
-    { icon: Github, label: "GitHub", value: github?.replace(/^https?:\/\//, ""), href: github },
-    { icon: Linkedin, label: "LinkedIn", value: linkedin?.replace(/^https?:\/\//, ""), href: linkedin },
+    { icon: Instagram, label: "Instagram", value: instagram ? `@${handle(instagram).split("/").pop()}` : null, href: instagram },
+    { icon: Github, label: "GitHub", value: github ? handle(github) : null, href: github },
+    { icon: Linkedin, label: "LinkedIn", value: linkedin ? handle(linkedin) : null, href: linkedin },
   ];
 
   const field =
@@ -83,16 +93,19 @@ export function Contact() {
           </Reveal>
 
           <Reveal delay={120} className="lg:col-span-3">
-            <form onSubmit={onSubmit} noValidate className="glass rounded-3xl p-6 sm:p-8" aria-describedby={canSend ? undefined : "contact-status"}>
-              {!canSend && (
-                <div id="contact-status" className="mb-6 flex gap-3 rounded-2xl border border-neon-amber/30 bg-neon-amber/10 p-4 text-sm">
-                  <Info className="mt-0.5 size-4 shrink-0 text-neon-amber" aria-hidden />
-                  <p className="text-muted-foreground">
-                    <strong className="text-foreground">Messaging isn&apos;t switched on yet.</strong> Once Jateen adds a contact
-                    email, this form will open your email app with your message ready to send.
-                  </p>
-                </div>
-              )}
+            <form onSubmit={onSubmit} noValidate className="glass relative rounded-3xl p-6 sm:p-8">
+              {/* Honeypot for bots — hidden from people and screen readers */}
+              <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+                <label htmlFor="contact-website">Website</label>
+                <input
+                  id="contact-website"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={values.website}
+                  onChange={(e) => setValues((v) => ({ ...v, website: e.target.value }))}
+                />
+              </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Name" error={errors.name} id="contact-name">
                   <input
@@ -141,10 +154,18 @@ export function Contact() {
                 </Field>
               </div>
               <div className="mt-6 flex flex-wrap items-center gap-4">
-                <Button type="submit" variant="hero" size="xl" disabled={!canSend}>
-                  <Send /> Send Message
+                <Button type="submit" variant="hero" size="xl" disabled={status === "sending"}>
+                  {status === "sending" ? <Loader2 className="animate-spin" /> : <Send />}
+                  {status === "sending" ? "Sending…" : "Send Message"}
                 </Button>
-                {sent && <p className="text-sm text-success" role="status">Your email app should open with the message ready.</p>}
+                <div aria-live="polite" className="text-sm">
+                  {status === "sent" && (
+                    <p className="flex items-center gap-2 text-success">
+                      <CheckCircle2 className="size-4" /> Thanks! Your message has been sent to Jateen.
+                    </p>
+                  )}
+                  {status === "error" && <p className="text-destructive">{serverError}</p>}
+                </div>
               </div>
             </form>
           </Reveal>

@@ -1,11 +1,12 @@
-import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowUp, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { navItems, profile } from "@/content/profile";
 import { Logo } from "./Logo";
 
 export function Footer() {
-  const { email, github, linkedin } = profile.contact;
+  const { email, github, linkedin, instagram } = profile.contact;
   const socials = [
     { icon: Mail, label: "Email", href: email ? `mailto:${email}` : null },
+    { icon: Instagram, label: "Instagram", href: instagram },
     { icon: Github, label: "GitHub", href: github },
     { icon: Linkedin, label: "LinkedIn", href: linkedin },
   ];
