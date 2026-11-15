@@ -36,3 +36,4 @@ use the editor.
 - Arcade games live in `src/components/arcade/games/`, each implementing `GameProps` (`types.ts`) and registered in `registry.ts`; `GameModal` owns pause/restart/sound/score UI so games only handle gameplay.
 - Canvas games read colors from CSS tokens via `src/lib/arcade/palette.ts`, keeping the design system as the single source of color.
 - Best scores and the sound setting are stored in localStorage via `src/lib/arcade/storage.ts` (higher score is always better).
+- Contact form submissions are validated with the shared zod schema in `src/lib/contact.ts` and stored by the `submitContact` server function into `contact_submissions`, which has RLS on and no public policies so visitors can never read submissions.

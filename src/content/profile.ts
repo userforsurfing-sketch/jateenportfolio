@@ -54,6 +54,7 @@ export const profile = {
     email: null as string | null,
     github: null as string | null,
     linkedin: null as string | null,
+    instagram: "https://www.instagram.com/sharif_jaat2510/" as string | null,
   },
 };
 
