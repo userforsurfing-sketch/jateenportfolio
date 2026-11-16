@@ -19,6 +19,8 @@ export function readPalette() {
     solid: token("--game-solid", "#2a2645"),
     solidEdge: token("--game-solid-edge", "#6a5acd"),
     road: token("--game-road", "#15152a"),
+    hazard: token("--game-hazard", "#f4ff3a"),
+    hazardAlt: token("--game-hazard-alt", "#ff4fb0"),
     fg: token("--foreground", "#fafaff"),
     muted: token("--muted-foreground", "#a9a9c8"),
     primary: token("--primary", "#4fa3ff"),
