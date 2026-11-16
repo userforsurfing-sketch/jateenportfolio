@@ -386,10 +386,10 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
         }
       }
 
-      ctx.shadowColor = pal.red;
-      ctx.shadowBlur = 12;
-      ctx.fillStyle = alpha(pal.red, 0.35);
-      ctx.strokeStyle = pal.red;
+      ctx.shadowColor = pal.hazard;
+      ctx.shadowBlur = 14;
+      ctx.fillStyle = alpha(pal.hazard, 0.9);
+      ctx.strokeStyle = pal.fg;
       ctx.lineWidth = 2;
       for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {

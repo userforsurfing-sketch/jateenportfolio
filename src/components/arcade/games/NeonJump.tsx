@@ -219,10 +219,10 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
 
       // Obstacles
       for (const o of obstacles) {
-        ctx.shadowColor = pal.pink;
-        ctx.shadowBlur = 16;
-        ctx.strokeStyle = pal.pink;
-        ctx.fillStyle = alpha(pal.pink, 0.22);
+        ctx.shadowColor = pal.hazard;
+        ctx.shadowBlur = 18;
+        ctx.strokeStyle = pal.fg;
+        ctx.fillStyle = alpha(pal.hazard, 0.9);
         ctx.lineWidth = 2.5;
         if (o.kind === "spike") {
           for (let i = 0; i < o.count; i++) {
@@ -236,9 +236,9 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
             ctx.stroke();
           }
         } else {
-          ctx.strokeStyle = pal.amber;
-          ctx.shadowColor = pal.amber;
-          ctx.fillStyle = alpha(pal.amber, 0.22);
+          ctx.strokeStyle = pal.fg;
+          ctx.shadowColor = pal.hazardAlt;
+          ctx.fillStyle = alpha(pal.hazardAlt, 0.85);
           ctx.beginPath();
           ctx.roundRect(o.x, GROUND - o.h, o.w, o.h, 4);
           ctx.fill();

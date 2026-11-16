@@ -112,8 +112,11 @@
   /* Canvas game surfaces */
   --game-bg: oklch(0.1 0.03 275);
   --game-grid: oklch(0.6 0.2 285 / 18%);
-  --game-solid: oklch(0.28 0.05 280);
-  --game-solid-edge: oklch(0.5 0.12 285);
+  --game-solid: oklch(0.38 0.07 280);
+  --game-solid-edge: oklch(0.78 0.14 285);
+  /* Obstacles: bright, high-contrast so they never blend into the dark game backgrounds */
+  --game-hazard: oklch(0.92 0.2 105);
+  --game-hazard-alt: oklch(0.78 0.24 345);
   --game-road: oklch(0.16 0.03 275);
 
   --gradient-brand: linear-gradient(120deg, var(--primary) 0%, var(--accent) 100%);

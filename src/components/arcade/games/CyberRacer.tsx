@@ -28,7 +28,7 @@ interface Car {
   x: number;
   y: number;
   speed: number;
-  color: keyof Pick<Palette, "pink" | "amber" | "accent" | "green">;
+  color: keyof Pick<Palette, "hazardAlt" | "amber" | "hazard" | "green">;
   passed: boolean;
 }
 
@@ -68,7 +68,7 @@ export function CyberRacer({ paused, runId, sfx, onScore, onGameOver }: GameProp
 
     onScoreRef.current(0);
 
-    const colors: Car["color"][] = ["pink", "amber", "accent", "green"];
+    const colors: Car["color"][] = ["hazardAlt", "amber", "hazard", "green"];
 
     const spawn = () => {
       const lane = Math.floor(Math.random() * LANES);
@@ -84,7 +84,7 @@ export function CyberRacer({ paused, runId, sfx, onScore, onGameOver }: GameProp
         x,
         y: -CAR_H - 20,
         speed: rand(150, 250) + Math.min(120, time * 2),
-        color: colors[Math.floor(Math.random() * colors.length)] ?? "pink",
+        color: colors[Math.floor(Math.random() * colors.length)] ?? "hazardAlt",
         passed: false,
       });
     };
@@ -157,8 +157,8 @@ export function CyberRacer({ paused, runId, sfx, onScore, onGameOver }: GameProp
       ctx.save();
       ctx.shadowColor = body;
       ctx.shadowBlur = isPlayer ? 26 : 14;
-      ctx.fillStyle = alpha(body, 0.25);
-      ctx.strokeStyle = body;
+      ctx.fillStyle = alpha(body, isPlayer ? 0.25 : 0.8);
+      ctx.strokeStyle = isPlayer ? body : pal.fg;
       ctx.lineWidth = 2.5;
       ctx.beginPath();
       ctx.roundRect(x, y, CAR_W, CAR_H, 12);
