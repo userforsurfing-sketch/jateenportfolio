@@ -13,14 +13,14 @@ function ProjectLink({ url, label, icon }: { url: string | null; label: string; 
   const Icon = icon === "demo" ? ExternalLink : Github;
   if (!url) {
     return (
-      <Button variant="glass" size="sm" disabled title={`${label} link not added yet`}>
+      <Button variant="glass" size="sm" className="h-10 sm:h-8" disabled title={`${label} link not added yet`}>
         <Lock /> {icon === "demo" ? "Demo soon" : "Source soon"}
       </Button>
     );
   }
   const external = /^https?:\/\//.test(url);
   return (
-    <Button asChild variant={icon === "demo" ? "hero" : "glass"} size="sm">
+    <Button asChild variant={icon === "demo" ? "hero" : "glass"} size="sm" className="h-10 sm:h-8">
       <a href={url} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
         <Icon /> {label}
       </a>
@@ -76,7 +76,7 @@ function ProjectCard({ project }: { project: Project }) {
 
 export function Projects() {
   return (
-    <section id="projects" aria-labelledby="projects-title" className="relative px-4 py-24 sm:px-6 sm:py-32">
+    <section id="projects" aria-labelledby="projects-title" className="relative px-4 py-16 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           id="projects"

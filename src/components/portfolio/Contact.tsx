@@ -57,7 +57,7 @@ export function Contact() {
     "w-full rounded-2xl border border-input bg-background/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30";
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="relative px-4 py-24 sm:px-6 sm:py-32">
+    <section id="contact" aria-labelledby="contact-title" className="relative px-4 py-16 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-6xl">
         <SectionHeading id="contact" eyebrow="06 — Contact" title="Let's connect" description="Have an idea, a question or just want to say hi?" />
 

@@ -222,8 +222,8 @@ export function GameModal({ game, onClose, onBestChange }: GameModalProps) {
           <Game paused={!isPlaying} runId={runId} sfx={sfx} onScore={setScore} onGameOver={handleGameOver} />
 
           {phase !== "playing" && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-background/60 p-4 backdrop-blur-sm animate-in fade-in duration-200">
-              <div className="glass-strong w-full max-w-md rounded-3xl p-6 text-center sm:p-8">
+            <div className="absolute inset-0 z-10 flex overflow-y-auto overscroll-contain rounded-2xl bg-background/60 p-3 backdrop-blur-sm animate-in fade-in duration-200 sm:p-4">
+              <div className="glass-strong m-auto w-full max-w-md rounded-3xl p-5 text-center sm:p-8">
                 {phase === "over" && result ? (
                   <>
                     <p className="eyebrow">{result.won ? "You did it" : "Game over"}</p>

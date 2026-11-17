@@ -275,8 +275,8 @@ export function SnakeX({ paused, runId, sfx, onScore, onGameOver }: GameProps) {
   );
 
   return (
-    <div className="flex h-full w-full flex-col">
-      <div ref={wrapRef} className="flex min-h-0 flex-1 items-center justify-center">
+    <div className="flex h-full w-full flex-col short-landscape:flex-row short-landscape:gap-4">
+      <div ref={wrapRef} className="flex min-h-0 min-w-0 flex-1 items-center justify-center">
         <canvas
           ref={canvasRef}
           className="touch-none rounded-2xl border border-glass-border"
@@ -284,7 +284,7 @@ export function SnakeX({ paused, runId, sfx, onScore, onGameOver }: GameProps) {
           aria-label="Snake X game board. Use arrow keys, WASD or swipe to steer."
         />
       </div>
-      <div className="hidden shrink-0 justify-center pt-3 max-md:flex pointer-coarse:flex">
+      <div className="hidden shrink-0 justify-center pt-3 max-md:flex pointer-coarse:flex short-landscape:items-center short-landscape:pt-0">
         <div className="grid grid-cols-3 gap-2">
           <span />
           {pad("up", "Up", <ArrowUp />)}

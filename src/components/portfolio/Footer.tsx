@@ -21,10 +21,10 @@ export function Footer() {
         </div>
 
         <nav aria-label="Footer">
-          <ul className="grid grid-cols-2 gap-x-10 gap-y-2 sm:grid-cols-4">
+          <ul className="grid grid-cols-2 gap-x-10 gap-y-1 sm:grid-cols-4">
             {navItems.map((n) => (
               <li key={n.id}>
-                <a href={`#${n.id}`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                <a href={`#${n.id}`} className="inline-block py-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
                   {n.label}
                 </a>
               </li>
@@ -65,7 +65,7 @@ export function Footer() {
         <p className="font-mono text-xs text-muted-foreground">© {year} Jateen. All rights reserved.</p>
         <a
           href="#home"
-          className="glass glass-hover flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold"
+          className="glass glass-hover flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs font-semibold"
         >
           <ArrowUp className="size-3.5" /> Back to top
         </a>

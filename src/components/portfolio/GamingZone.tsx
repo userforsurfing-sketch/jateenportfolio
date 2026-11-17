@@ -23,7 +23,7 @@ export function GamingZone() {
   const close = useCallback(() => setActive(null), []);
 
   return (
-    <section id="games" aria-labelledby="games-title" className="relative px-4 py-24 sm:px-6 sm:py-32">
+    <section id="games" aria-labelledby="games-title" className="relative px-4 py-16 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           id="games"

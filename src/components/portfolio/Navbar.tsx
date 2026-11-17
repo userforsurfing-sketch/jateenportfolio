@@ -88,7 +88,7 @@ export function Navbar() {
         id="mobile-menu"
         className={cn(
           "glass-strong mx-auto mt-2 max-w-6xl origin-top overflow-hidden rounded-3xl transition-all duration-500 lg:hidden",
-          open ? "max-h-[32rem] opacity-100" : "pointer-events-none max-h-0 border-transparent opacity-0",
+          open ? "max-h-[calc(100svh-6rem)] overflow-y-auto overscroll-contain bg-background/90! opacity-100" : "pointer-events-none max-h-0 border-transparent opacity-0",
         )}
       >
         <ul className="grid gap-1 p-3">

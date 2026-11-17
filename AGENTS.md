@@ -37,3 +37,4 @@ use the editor.
 - Canvas games read colors from CSS tokens via `src/lib/arcade/palette.ts`, keeping the design system as the single source of color.
 - Best scores and the sound setting are stored in localStorage via `src/lib/arcade/storage.ts` (higher score is always better).
 - Contact form submissions are validated with the shared zod schema in `src/lib/contact.ts` and stored by the `submitContact` server function into `contact_submissions`, which has RLS on and no public policies so visitors can never read submissions.
+- Phones held sideways use the `short-landscape` custom variant in `src/styles.css` to place game touch controls beside the board, since those screens have too little height to stack them.

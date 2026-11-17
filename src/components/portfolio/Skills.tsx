@@ -17,7 +17,7 @@ const ICONS: Record<SkillIcon, LucideIcon> = {
 
 export function Skills() {
   return (
-    <section id="skills" aria-labelledby="skills-title" className="relative px-4 py-24 sm:px-6 sm:py-32">
+    <section id="skills" aria-labelledby="skills-title" className="relative px-4 py-16 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           id="skills"

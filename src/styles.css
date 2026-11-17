@@ -7,6 +7,8 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+/* Phones held sideways: very little height, so game controls move beside the board. */
+@custom-variant short-landscape (@media (orientation: landscape) and (max-height: 540px));
 
 /*
  * JATEEN – My Digital Space design system.

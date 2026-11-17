@@ -6,7 +6,7 @@ import { SectionHeading } from "./SectionHeading";
 
 export function Journey() {
   return (
-    <section id="journey" aria-labelledby="journey-title" className="relative px-4 py-24 sm:px-6 sm:py-32">
+    <section id="journey" aria-labelledby="journey-title" className="relative px-4 py-16 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-4xl">
         <SectionHeading id="journey" eyebrow="05 — My journey" title="Step by step" description="Where it started, where it's going." />
 
