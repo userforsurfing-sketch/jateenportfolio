@@ -237,8 +237,8 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
           }
         } else {
           ctx.strokeStyle = pal.fg;
-          ctx.shadowColor = pal.hazardAlt;
-          ctx.fillStyle = alpha(pal.hazardAlt, 0.85);
+          ctx.shadowColor = pal.hazard;
+          ctx.fillStyle = alpha(pal.hazard, 0.75);
           ctx.beginPath();
           ctx.roundRect(o.x, GROUND - o.h, o.w, o.h, 4);
           ctx.fill();
