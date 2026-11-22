@@ -157,7 +157,7 @@ export function CyberRacer({ paused, runId, sfx, onScore, onGameOver }: GameProp
       ctx.save();
       ctx.shadowColor = body;
       ctx.shadowBlur = isPlayer ? 26 : 14;
-      ctx.fillStyle = alpha(body, isPlayer ? 0.25 : 0.8);
+      ctx.fillStyle = isPlayer ? alpha(body, 0.25) : body;
       ctx.strokeStyle = isPlayer ? body : pal.fg;
       ctx.lineWidth = 2.5;
       ctx.beginPath();

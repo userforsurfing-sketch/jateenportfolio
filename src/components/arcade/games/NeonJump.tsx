@@ -157,6 +157,10 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
     };
 
     const draw = (time: number) => {
+      // Solid base first: the sky gradient is partly see-through, and without this
+      // old frames pile up as smeared ghost trails behind every obstacle.
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, W, H);
       const sky = ctx.createLinearGradient(0, 0, 0, H);
       sky.addColorStop(0, pal.bg);
       sky.addColorStop(0.8, alpha(pal.accent, 0.28));
@@ -222,7 +226,7 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
         ctx.shadowColor = pal.hazard;
         ctx.shadowBlur = 18;
         ctx.strokeStyle = pal.fg;
-        ctx.fillStyle = alpha(pal.hazard, 0.9);
+        ctx.fillStyle = pal.hazard;
         ctx.lineWidth = 2.5;
         if (o.kind === "spike") {
           for (let i = 0; i < o.count; i++) {
@@ -238,7 +242,7 @@ export function NeonJump({ paused, runId, sfx, onScore, onGameOver }: GameProps)
         } else {
           ctx.strokeStyle = pal.fg;
           ctx.shadowColor = pal.hazard;
-          ctx.fillStyle = alpha(pal.hazard, 0.75);
+          ctx.fillStyle = pal.hazard;
           ctx.beginPath();
           ctx.roundRect(o.x, GROUND - o.h, o.w, o.h, 4);
           ctx.fill();

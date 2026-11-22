@@ -57,3 +57,10 @@ describe("devil trap levels", () => {
     expect(findTile(level.map, "E")).not.toBeNull();
   });
 });
+
+describe("game colours", () => {
+  it("adds transparency to plain rgb colours used by the canvas games", async () => {
+    const { alpha } = await import("@/lib/arcade/palette");
+    expect(alpha("rgb(244, 255, 58)", 0.5)).toBe("rgba(244, 255, 58, 0.5)");
+  });
+});

@@ -341,6 +341,9 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
     };
 
     const draw = (time: number) => {
+      // Solid base first so old frames never build up under the see-through gradient.
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, W, H);
       const bg = ctx.createLinearGradient(0, 0, 0, H);
       bg.addColorStop(0, pal.bg);
       bg.addColorStop(1, alpha(pal.red, 0.18));
@@ -388,7 +391,7 @@ export function DevilTrap({ paused, runId, sfx, onScore, onGameOver }: GameProps
 
       ctx.shadowColor = pal.hazard;
       ctx.shadowBlur = 14;
-      ctx.fillStyle = alpha(pal.hazard, 0.9);
+      ctx.fillStyle = pal.hazard;
       ctx.strokeStyle = pal.fg;
       ctx.lineWidth = 2;
       for (let r = 0; r < ROWS; r++) {
