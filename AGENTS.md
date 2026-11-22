@@ -31,6 +31,7 @@ use the editor.
 
 ## Project rules
 
+- Keep the social share rendition in `public/` so the absolute share-image URL is served by the deployment itself, not an external asset host.
 - Single scrolling page at `/` with section anchors (`#about`, `#games`, …); the brief asks for smooth-scroll navigation with an active-section indicator.
 - All personal content (bio, skills, projects, journey, contact links) lives in `src/content/profile.ts`; unknown values stay `null` and render as labelled placeholders so nothing is invented.
 - Arcade games live in `src/components/arcade/games/`, each implementing `GameProps` (`types.ts`) and registered in `registry.ts`; `GameModal` owns pause/restart/sound/score UI so games only handle gameplay.

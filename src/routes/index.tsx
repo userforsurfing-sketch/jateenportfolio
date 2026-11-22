@@ -11,6 +11,8 @@ import { Projects } from "@/components/portfolio/Projects";
 import { Skills } from "@/components/portfolio/Skills";
 
 const TITLE = "JATEEN – My Digital Space";
+const SITE_URL = "https://jateenportfolio.vercel.app/";
+const SHARE_IMAGE = `${SITE_URL}portfolio-share.jpg`;
 const DESCRIPTION =
   "Jateen's personal portfolio: projects, skills, journey and a built-in arcade with five original games — Neon Jump, Devil Trap, Cyber Racer, Memory Match and Snake X.";
 
@@ -26,9 +28,16 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },
-      { property: "og:url", content: "https://jateenportfolio.lovable.app/" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: SHARE_IMAGE },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:alt", content: "Jateen's portfolio preview on a neon-lit laptop" },
+      { name: "twitter:image", content: SHARE_IMAGE },
+      { name: "twitter:image:alt", content: "Jateen's portfolio preview on a neon-lit laptop" },
     ],
-    links: [{ rel: "canonical", href: "https://jateenportfolio.lovable.app/" }],
+    links: [{ rel: "canonical", href: SITE_URL }],
   }),
   component: Index,
 });
